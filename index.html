@@ -87,7 +87,27 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "ee42cdfa470e4d0a97a57da2c40a9bf1"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                          
+
+  <script>
+
+    TrackJS.track('Testing TrackJS!');
+                        
+    class inputError extends Error{
+      constructor(message) {
+        super(message);
+        this.name = "inputError";
+      }
+    }
+
+
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -95,13 +115,115 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+
+      try{
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      }
+
+      catch(err){
+        throw new inputError('Invalid inputs, please input number');
+      }
+
+      finally{
+        console.log('input valid inputs');
+      }
+      
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    errorBtns[0].addEventListener("click", () => {
+      console.log("console log");
+    });
+
+    errorBtns[1].addEventListener("click", () => {
+      console.error("console error");
+    });
+
+    errorBtns[2].addEventListener("click", () => {
+      console.count("console count");
+    });
+
+    errorBtns[3].addEventListener("click", () => {
+      console.warn("this is a console warn");
+    });
+
+    errorBtns[4].addEventListener("click", () => {
+      const x = 0;
+      const y = 2;
+      const reason = 'x is supposed to equal y'
+      console.assert(x == y, {x,y,reason});
+    });
+
+    errorBtns[5].addEventListener("click", () => {
+      console.clear();
+    });
+
+    errorBtns[6].addEventListener("click", () => {
+      consloe.dir(document.head);
+    });
+
+    errorBtns[7].addEventListener("click", () => {
+      console.dirxml(document);
+    });
+        
+    errorBtns[8].addEventListener("click", () => {
+      let lable = "group lable";
+      console.group(lable);
+      console.info('first');
+      console.info('second');
+      console.info('third');
+    });
+
+    errorBtns[9].addEventListener("click", () => {
+      let lable = "group lable";
+      console.groupEnd(lable);
+    });
+
+    errorBtns[10].addEventListener("click", () => {
+      console.table([
+      {
+        Name: 'Xinchen Zhang',
+        ID: 'A16620283'
+      },
+
+      {
+        Name: 'name',
+        ID: 'A12345678'
+      }
+      ]);
+    });
+
+    errorBtns[11].addEventListener("click", () => {
+      console.time('Timer');
+    });
+
+    errorBtns[12].addEventListener("click", () => {
+      console.timeEnd('Timer');
+    });
+
+    errorBtns[13].addEventListener("click", () => {
+      let f1 = () => { f2(); };
+      let f2 = () => { f3(); };
+      let f3 = () => { console.trace(); };
+      f1();
+    });
+
+    errorBtns[14].addEventListener("click", () => {
+      throw new Error("A global error");
+    });
+
+
+    
+    
+
+
+
+
+
   </script>
 </body>
 
